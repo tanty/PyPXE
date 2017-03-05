@@ -265,6 +265,17 @@ def main():
 
                 return result
 
+            def sighup_handler(signum, frame):
+                dhcp_export_leases(signum, frame)
+                if args.STATIC_CONFIG:
+                    sys_logger.info("Reloading DHCP static leases")
+
+                    message, loaded_statics = load_dhcp_static_config(args.STATIC_CONFIG)
+                    if message:
+                        sys_logger.error(message)
+                    else:
+                        dhcp_server.static_config = loaded_statics
+
             if args.STATIC_CONFIG:
                 message, loaded_statics = load_dhcp_static_config(args.STATIC_CONFIG)
                 if message:
@@ -304,7 +315,7 @@ def main():
             signal.signal(signal.SIGINT, dhcp_export_leases)
             signal.signal(signal.SIGTERM, dhcp_export_leases)
             signal.signal(signal.SIGALRM, dhcp_export_leases)
-            signal.signal(signal.SIGHUP, dhcp_export_leases)
+            signal.signal(signal.SIGHUP, sighup_handler)
             dhcpd = threading.Thread(target = dhcp_server.listen)
             dhcpd.daemon = True
             dhcpd.start()
