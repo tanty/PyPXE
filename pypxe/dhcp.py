@@ -272,8 +272,9 @@ class DHCPD:
             if router:
                 response += self.tlv_encode(3, socket.inet_aton(router)) # router
             dns_server = self.get_namespaced_static('dhcp.binding.{0}.dns'.format(self.get_mac(client_mac)), [self.dns_server])
-            dns_server = b''.join([socket.inet_aton(i) for i in dns_server])
-            response += self.tlv_encode(6, dns_server)
+            if dns_server:
+                dns_server = b''.join([socket.inet_aton(i) for i in dns_server])
+                response += self.tlv_encode(6, dns_server)
             response += self.tlv_encode(51, struct.pack('!I', 86400)) # lease time
 
         # TFTP Server OR HTTP Server; if iPXE, need both
