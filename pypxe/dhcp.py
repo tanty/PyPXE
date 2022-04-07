@@ -269,7 +269,8 @@ class DHCPD:
             subnet_mask = self.get_namespaced_static('dhcp.binding.{0}.subnet'.format(self.get_mac(client_mac)), self.subnet_mask)
             response += self.tlv_encode(1, socket.inet_aton(subnet_mask)) # subnet mask
             router = self.get_namespaced_static('dhcp.binding.{0}.router'.format(self.get_mac(client_mac)), self.router)
-            response += self.tlv_encode(3, socket.inet_aton(router)) # router
+            if router:
+                response += self.tlv_encode(3, socket.inet_aton(router)) # router
             dns_server = self.get_namespaced_static('dhcp.binding.{0}.dns'.format(self.get_mac(client_mac)), [self.dns_server])
             dns_server = b''.join([socket.inet_aton(i) for i in dns_server])
             response += self.tlv_encode(6, dns_server)
