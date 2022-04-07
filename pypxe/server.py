@@ -32,6 +32,7 @@ SETTINGS = {'NETBOOT_DIR':'netboot',
             'DHCP_BROADCAST':'',
             'DHCP_FILESERVER':'192.168.2.2',
             'DHCP_WHITELIST':False,
+            'DHCP_ANSWER_ALL_REQUESTS':False,
             'HTTP_PORT':80,
             'HTTP_SERVER_IP':'0.0.0.0',
             'LEASES_FILE':'',
@@ -97,6 +98,7 @@ def parse_cli_arguments():
     dhcp_group.add_argument('--dhcp-broadcast', action = 'store', dest = 'DHCP_BROADCAST', help = 'DHCP broadcast address', default = SETTINGS['DHCP_BROADCAST'])
     dhcp_group.add_argument('--dhcp-fileserver', action = 'store', dest = 'DHCP_FILESERVER', help = 'DHCP fileserver IP', default = SETTINGS['DHCP_FILESERVER'])
     dhcp_group.add_argument('--dhcp-whitelist', action = 'store_true', dest = 'DHCP_WHITELIST', help = 'Only respond to DHCP clients present in --static-config', default = SETTINGS['DHCP_WHITELIST'])
+    dhcp_group.add_argument('--dhcp-answer-all-requests', action = 'store_true', dest = 'DHCP_ANSWER_ALL_REQUESTS', help = 'Whether to serve non-PXE clients too', default = SETTINGS['DHCP_ANSWER_ALL_REQUESTS'])
 
     # HTTP server arguments
     http_group = parser.add_argument_group(title = 'HTTP', description = 'Arguments relevant to the HTTP server')
@@ -278,6 +280,7 @@ def main():
                 mode_debug = do_debug('dhcp'),
                 mode_verbose = do_verbose('dhcp'),
                 whitelist = args.DHCP_WHITELIST,
+                answer_all_requests = args.DHCP_ANSWER_ALL_REQUESTS,
                 static_config = loaded_statics,
                 logger = dhcp_logger,
                 saveleases = args.LEASES_FILE)

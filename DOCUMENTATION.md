@@ -115,6 +115,7 @@ The DHCP server class, __`DHCPD()`__, is constructed with the following __keywor
 |__`mode_proxy`__|This indicates whether or not the DHCP server should be started in ProxyDHCP mode or not.|`False`|_bool_|
 |__`static_config`__|This specifies a static configuration dictionary so that it can give specific leases to specific MAC addresses.|`{}`|_dict_|
 |__`whitelist`__|This indicates whether or not the DHCP server should use the static configuration dictionary as a whitelist; effectively, the DHCP server will only give out leases to those specified in the `static_config` dictionary.|`False`|_bool_|
+|__`answer_all_requests`__|This indicates whether or not the DHCP server will give out leases to non-PXE clients.|`False`|_bool_|
 |__`mode_debug`__|This indicates whether or not the DHCP server should be started in debug mode or not.|`False`|_bool_|
 |__`mode_verbose`__|This indicates whether or not the DHCP server should be started in verbose mode or not.|`False`|_bool_|
 |__`logger`__|A [Logger](https://docs.python.org/2/library/logging.html#logger-objects) object used for logging messages, if `None` a local [StreamHandler](https://docs.python.org/2/library/logging.handlers.html#streamhandler) instance will be created.|`None`|[_Logger_](https://docs.python.org/2/library/logging.html#logger-objects)|

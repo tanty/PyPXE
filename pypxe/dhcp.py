@@ -57,6 +57,7 @@ class DHCPD:
         self.mode_proxy = server_settings.get('mode_proxy', False) # ProxyDHCP mode
         self.static_config = server_settings.get('static_config', dict())
         self.whitelist = server_settings.get('whitelist', False)
+        self.answer_all_requests = server_settings.get('answer_all_requests', False)
         self.mode_verbose = server_settings.get('mode_verbose', False) # debug mode
         self.mode_debug = server_settings.get('mode_debug', False) # debug mode
         self.logger = server_settings.get('logger', None)
@@ -100,6 +101,7 @@ class DHCPD:
             self.logger.info('Using Static Leasing')
             self.logger.info('Using Static Leasing Whitelist: {0}'.format(self.whitelist))
 
+        self.logger.info('Serving non-PXE clients too: {0}'.format(self.answer_all_requests))
         self.logger.info('File Server IP: {0}'.format(self.file_server))
         self.logger.info('File Name: {0}'.format(self.file_name))
         self.logger.info('ProxyDHCP Mode: {0}'.format(self.mode_proxy))
@@ -349,7 +351,7 @@ class DHCPD:
             self.logger.info('PXE client request received from {0}'.format(self.get_mac(client_mac)))
             return True
         self.logger.info('Non-PXE client request received from {0}'.format(self.get_mac(client_mac)))
-        return False
+        return self.answer_all_requests
 
     def listen(self):
         '''Main listen loop.'''

@@ -71,6 +71,7 @@ The following are arguments that can be passed to `pypxe.server` when running fr
 |__`--dhcp-broadcast DHCP_BROADCAST`__|Specify DHCP broadcast address|`''`|
 |__`--dhcp-fileserver DHCP_FILESERVER`__|Specify DHCP file server IP address|`192.168.2.2`|
 |__`--dhcp-whitelist`__|Only serve clients specified in the static lease file (`--static-config`)|`False`|
+|__`--dhcp-answer-all-requests`__|Whether to serve non-PXE clients too|`False`|
 
 ##### TFTP Service Arguments
 
